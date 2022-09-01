@@ -1,9 +1,9 @@
 .header__link {
   background-color: #000;
   margin: 0;
-  padding: 6px 0 0;
+  padding-top: 6px;
   border: none;
-  font-size: 18px;
+  font-size: 15px;
   line-height: 1.22;
   text-decoration: none;
   color: #fff;
@@ -13,4 +13,10 @@
 
 .header__link:hover {
   opacity: 0.6;
+}
+
+@media screen and (min-width: 698px) {
+  .header__link {
+    font-size: 18px;
+  }
 }

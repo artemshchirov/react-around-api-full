@@ -1,20 +1,21 @@
 .header {
-    max-width: 320px;
-    border-bottom: 1px solid rgba(84, 84, 84, 0.7);
-    padding-bottom: 31.6px;
-    display: flex;
-    justify-content: space-between;
+  max-width: 320px;
+  padding-bottom: 31.6px;
+  display: flex;
+  justify-content: space-between;
+  max-width: calc(358px - 50px * 2);
 }
 
 @media screen and (min-width: 698px) {
-    .header {
-        padding: 17px 0 41px;
-        max-width: calc(698px - 50px*2);
-    }
+  .header {
+    padding: 17px 0 41px;
+    max-width: calc(698px - 50px * 2);
+    border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+  }
 }
 
 @media screen and (min-width: 1024px) {
-    .header {
-        max-width: calc(1280px - 200px*2);
-    }
+  .header {
+    max-width: calc(1280px - 200px * 2);
+  }
 }

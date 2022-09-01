@@ -8,8 +8,15 @@
   border: none;
   border-bottom: 2px solid #ccc;
   outline: none;
+  width: 260px;
 }
 
 .sign__input:first-of-type {
   margin-top: 50px;
+}
+
+@media screen and (min-width: 698px) {
+  .sign__input {
+      width: 358px;
+  }
 }

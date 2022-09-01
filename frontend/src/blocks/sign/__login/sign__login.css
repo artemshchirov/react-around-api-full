@@ -1,5 +1,5 @@
 .sign__login {
-  padding-top: 15px;
+  padding-top: 20px;
   text-decoration: none;
   font-size: 14px;
   line-height: 1.21;
@@ -9,4 +9,10 @@
 
 .sign__login:hover {
   opacity: 0.6;
+}
+
+@media screen and (min-width: 698px) {
+  .sign__login {
+    padding-top: 20px;
+  }
 }

@@ -1,7 +1,14 @@
 .header__email {
-  padding: 6px 24px 0 0;
+  padding: 6px 6px 0;
   margin: 0;
   font-weight: 500;
-  font-size: 18px;
-  line-height: 1.22;
+  font-size: 11px;
+  line-height: 1.21;
+}
+
+@media screen and (min-width: 698px) {
+  .header__email {
+    font-size: 18px;
+    line-height: 1.22;
+  }
 }
