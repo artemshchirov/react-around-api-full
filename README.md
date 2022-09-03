@@ -2,7 +2,9 @@
 
 Репозиторий для приложения проекта `Mesto`, включающий фронтенд и бэкенд части приложения со следующими возможностями: авторизации и регистрации пользователей, операции с карточками и пользователями. Бэкенд расположите в директории `backend/`, а фронтенд - в `frontend/`.
   
-<http://around.nomoredomains.sbs/>
+frontend <https://around.nomoredomains.sbs/>
+
+backend <https://around.backend.nomoredomains.sbs/>
 
 ip: 51.250.96.109
 ****
