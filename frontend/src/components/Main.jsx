@@ -3,13 +3,13 @@ import UserContext from '../contexts/UserContext';
 import Card from './Card';
 
 export default function Main({
-  onEditProfile,
-  onAddPlace,
-  onEditAvatar,
-  onCardClick,
   cards,
   onCardLike,
-  onCardDelete
+  onAddPlace,
+  onCardClick,
+  onEditAvatar,
+  onCardDelete,
+  onEditProfile
 }) {
   const { currentUser } = useContext(UserContext);
 
@@ -33,15 +33,18 @@ export default function Main({
         <button className="button button_profile_add" type="button" onClick={onAddPlace} />
       </section>
       <section className="cards section content__section">
-        {cards.map((card) => (
-          <Card
-            key={card._id}
-            card={card}
-            onCardClick={onCardClick}
-            onCardLike={onCardLike}
-            onCardDelete={onCardDelete}
-          />
-        ))}
+        {cards
+          .slice(0)
+          .reverse()
+          .map((card) => (
+            <Card
+              key={card._id}
+              card={card}
+              onCardClick={onCardClick}
+              onCardLike={onCardLike}
+              onCardDelete={onCardDelete}
+            />
+          ))}
       </section>
     </main>
   );

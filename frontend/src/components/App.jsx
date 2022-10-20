@@ -41,30 +41,32 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setIsLoading(true);
     handleLoginToken();
-  }, [navigate]);
+  }, []);
 
   const handleLoginToken = () => {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
       getContent(jwt)
-        .then(({ avatar, email }) => {
+        .then(({ email }) => {
+          getInitialContent();
           setUserEmail(email);
           setLoggedIn(true);
-          getInitialContent();
         })
         .catch((err) => {
+          handleLogout();
           showAlert('Ошибка инициализации контента');
           console.error(`Ошибка получения контента.\n${err}`);
         })
         .finally(() => {
           setIsLoading(false);
         });
+    } else {
+      handleLogout();
     }
   };
 
-  const getInitialContent = () => {
+  const getUserInfo = () => {
     api
       .getUserInfo()
       .then(({ _id, name, about, avatar }) => {
@@ -79,7 +81,9 @@ function App() {
         showAlert(`Ошибка загрузки данных пользователя`);
         console.error(`Ошибка загрузки данных пользователя.\n${err}`);
       });
+  };
 
+  const getCards = () => {
     api
       .getInitialCards()
       .then((initialCards) => {
@@ -88,22 +92,22 @@ function App() {
       .catch((err) => {
         showAlert(`Ошибка загрузки карточек`);
         console.error(`Ошибка загрузки карточек.\n${err}`);
-      })
-      .finally(() => {
-        setIsLoading(false);
       });
+  };
+
+  const getInitialContent = () => {
+    getUserInfo();
+    getCards();
   };
 
   const handleRegister = (email, password) => {
     register(email, password)
       .then(() => {
+        handleLogin(email, password);
         setStatusInfoToolTip(true);
-        setLoggedIn(true);
-        navigate('/');
       })
       .catch((err) => {
         setStatusInfoToolTip(false);
-        showAlert('Ошибка регистрации пользователя');
         console.error(`Ошибка регистрации пользователя.\n${err}`);
       })
       .finally(() => {
@@ -117,16 +121,27 @@ function App() {
         if (token) {
           localStorage.setItem('jwt', token);
           api.setToken(token);
-          setLoggedIn(true);
-          setUserEmail(email);
-          navigate('/');
+          getContent(token)
+            .then(() => {
+              getInitialContent();
+              setUserEmail(email);
+              setLoggedIn(true);
+              navigate('/');
+            })
+            .catch((err) => {
+              handleLogout();
+              showAlert('Ошибка инициализации контента');
+              console.error(`Ошибка инициализации контента.\n${err}`);
+            });
         }
       })
       .catch((err) => {
         setStatusInfoToolTip(false);
         setIsInfoToolTipOpen(true);
-        showAlert('Ошибка авторизации пользователя');
         console.error(`Ошибка авторизации пользователя.\n${err}`);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -222,7 +237,6 @@ function App() {
         showAlert('Ошибка добавления/удаления лайка');
         console.error(`Ошибка при добавлении/удалении лайка.\n${err}`);
       })
-
       .finally(() => {
         setIsLoading(false);
       });
@@ -232,7 +246,7 @@ function App() {
     setIsLoading(true);
     api
       .deleteItem(card._id)
-      .then((res) => {
+      .then(() => {
         setCards(cards.filter((c) => c._id !== card._id));
         closeAllPopups();
       })
@@ -240,7 +254,6 @@ function App() {
         showAlert('Ошибка удаления карточки');
         console.error(`Ошибка при удалении карточки.\n${err}`);
       })
-
       .finally(() => {
         setIsLoading(false);
       });
@@ -251,15 +264,13 @@ function App() {
     api
       .addItem({ name, link })
       .then((newCard) => {
-        console.log('res: ', newCard);
-        setCards([newCard, ...cards]);
+        setCards([...cards, newCard]);
         closeAllPopups();
       })
       .catch((err) => {
         showAlert('Ошибка создания карточки');
         console.error(`Ошибка при создании новой карточки.\n${err}`);
       })
-
       .finally(() => {
         setIsLoading(false);
       });
@@ -286,13 +297,13 @@ function App() {
                 <ProtectedRoute path="/" loggedIn={loggedIn} isLoading={isLoading}>
                   <Header loggedIn={loggedIn} email={userEmail} handleLogout={handleLogout} />
                   <Main
-                    onEditProfile={handleEditProfileClick}
-                    onEditAvatar={handleEditAvatarClick}
-                    onAddPlace={handleAddCardClick}
-                    onCardDelete={handleSubmitDeleteClick}
-                    onCardClick={handleCardClick}
-                    onCardLike={handleCardLike}
                     cards={cards}
+                    onCardLike={handleCardLike}
+                    onCardClick={handleCardClick}
+                    onAddPlace={handleAddCardClick}
+                    onEditAvatar={handleEditAvatarClick}
+                    onEditProfile={handleEditProfileClick}
+                    onCardDelete={handleSubmitDeleteClick}
                   />
                   <Footer />
                 </ProtectedRoute>
