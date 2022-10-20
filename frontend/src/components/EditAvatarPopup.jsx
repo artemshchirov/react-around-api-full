@@ -1,12 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import PopupWithForm from './PopupWithForm';
 
-export default function EditAvatarPopup({
-  isOpen,
-  onClose,
-  onUpdateAvatar,
-  isSending,
-}) {
+export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isSending }) {
   const inputRef = useRef();
   const [isValid, setIsValid] = useState(false);
   const [validationMessage, setValidationMessage] = useState({});
@@ -23,7 +18,7 @@ export default function EditAvatarPopup({
     const input = inputRef.current;
     setIsValid(input.closest('form').checkValidity());
     setValidationMessage({
-      [input.name]: input.validationMessage,
+      [input.name]: input.validationMessage
     });
   }
 
@@ -31,7 +26,7 @@ export default function EditAvatarPopup({
     const input = inputRef.current;
     evt.preventDefault();
     onUpdateAvatar({
-      avatar: input.value,
+      avatar: input.value
     });
   }
 
@@ -43,12 +38,9 @@ export default function EditAvatarPopup({
       onClose={onClose}
       onSubmit={handleSubmit}
       buttonText={isSending ? 'Сохранение...' : 'Сохранить'}
-      buttonActive={isValid}
-    >
+      buttonActive={isValid}>
       <input
-        className={`form__input ${
-          validationMessage.avatar && 'form__input_type_error'
-        }`}
+        className={`form__input ${validationMessage.avatar && 'form__input_type_error'}`}
         name="avatar"
         id="avatar"
         placeholder="Ссылка на изображение"
@@ -59,10 +51,7 @@ export default function EditAvatarPopup({
       />
       <span
         id="avatar-error"
-        className={`form__input-error ${
-          !isValid && 'form__input-error_visible'
-        }`}
-      >
+        className={`form__input-error ${!isValid && 'form__input-error_visible'}`}>
         {validationMessage.avatar}
       </span>
     </PopupWithForm>

@@ -4,11 +4,8 @@ class Api {
     this._token = headers.authorization;
   }
 
-  _handleResponse = (response) => {
-    return response.ok
-      ? response.json()
-      : Promise.reject(`Ошибка, код: ${response.status}`);
-  };
+  _handleResponse = (response) =>
+    response.ok ? response.json() : Promise.reject(`Ошибка, код: ${response.status}`);
 
   setToken(jwt) {
     this._token = jwt;
@@ -19,19 +16,19 @@ class Api {
       method: 'PATCH',
       headers: {
         authorization: `Bearer ${this._token}`,
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        avatar,
-      }),
+        avatar
+      })
     }).then(this._handleResponse);
   }
 
   getUserInfo() {
     return fetch(`${this._address}/users/me`, {
       headers: {
-        authorization: `Bearer ${this._token}`,
-      },
+        authorization: `Bearer ${this._token}`
+      }
     }).then(this._handleResponse);
   }
 
@@ -40,20 +37,20 @@ class Api {
       method: 'PATCH',
       headers: {
         authorization: `Bearer ${this._token}`,
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         name,
-        about,
-      }),
+        about
+      })
     }).then(this._handleResponse);
   }
 
   getInitialCards() {
     return fetch(`${this._address}/cards`, {
       headers: {
-        authorization: `Bearer ${this._token}`,
-      },
+        authorization: `Bearer ${this._token}`
+      }
     }).then(this._handleResponse);
   }
 
@@ -62,12 +59,12 @@ class Api {
       method: 'POST',
       headers: {
         authorization: `Bearer ${this._token}`,
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         name,
-        link,
-      }),
+        link
+      })
     }).then(this._handleResponse);
   }
 
@@ -75,8 +72,8 @@ class Api {
     return fetch(`${this._address}/cards/${id}`, {
       method: 'DELETE',
       headers: {
-        authorization: `Bearer ${this._token}`,
-      },
+        authorization: `Bearer ${this._token}`
+      }
     }).then(this._handleResponse);
   }
 
@@ -84,8 +81,8 @@ class Api {
     return fetch(`${this._address}/cards/${cardId}/likes`, {
       method: `${isLikeActive ? 'PUT' : 'DELETE'}`,
       headers: {
-        authorization: `Bearer ${this._token}`,
-      },
+        authorization: `Bearer ${this._token}`
+      }
     }).then(this._handleResponse);
   }
 }
@@ -94,8 +91,8 @@ const api = new Api({
   baseUrl: 'https://around.backend.nomoredomains.sbs',
   headers: {
     authorization: localStorage.getItem('jwt'),
-    'Content-Type': 'application/json',
-  },
+    'Content-Type': 'application/json'
+  }
 });
 
 export default api;

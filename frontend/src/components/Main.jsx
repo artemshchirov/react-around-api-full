@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import UserContext from '../contexts/UserContext';
 import Card from './Card';
 
 export default function Main({
@@ -9,9 +9,9 @@ export default function Main({
   onCardClick,
   cards,
   onCardLike,
-  onCardDelete,
+  onCardDelete
 }) {
-  const currentUser = useContext(CurrentUserContext);
+  const { currentUser } = useContext(UserContext);
 
   return (
     <main className="content page__content">
@@ -26,19 +26,11 @@ export default function Main({
         <div className="profile__content">
           <div className="profile__name-btn-container">
             <h1 className="profile__name">{currentUser.name}</h1>
-            <button
-              className="button button_profile_edit"
-              type="button"
-              onClick={onEditProfile}
-            ></button>
+            <button className="button button_profile_edit" type="button" onClick={onEditProfile} />
           </div>
           <p className="profile__about">{currentUser.about}</p>
         </div>
-        <button
-          className="button button_profile_add"
-          type="button"
-          onClick={onAddPlace}
-        ></button>
+        <button className="button button_profile_add" type="button" onClick={onAddPlace} />
       </section>
       <section className="cards section content__section">
         {cards.map((card) => (

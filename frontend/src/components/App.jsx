@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import UserContext from '../contexts/UserContext';
 import { register, authorize, getContent } from '../utils/auth';
 import AddPlacePopup from './AddPlacePopup';
 import EditAvatarPopup from './EditAvatarPopup';
@@ -14,10 +14,11 @@ import Main from './Main';
 import ProtectedRoute from './ProtectedRoute';
 import Register from './Register';
 import Spinner from './Spinner';
+import Alert from './Alert/Alert';
 import SubmitPopup from './SubmitPopup';
 import api from '../utils/api';
 
-const App = () => {
+function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
@@ -25,47 +26,58 @@ const App = () => {
   const [isEditProfilePopupOpen, setIsEditProfileOpen] = useState(false);
   const [imagePopupCard, setImagePopupCard] = useState(null);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
   const [deleteCard, setDeleteCard] = useState({});
 
   const [loggedIn, setLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState('');
-  const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(false);
+  const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(null);
   const [statusInfoToolTip, setStatusInfoToolTip] = useState(null);
+
+  const [messageAlert, setMessageAlert] = useState(null);
+  const [isActiveAlert, setIsActiveAlert] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const tokenCheck = () => {
-      let jwt = localStorage.getItem('jwt');
-      if (jwt) {
-        getContent(jwt)
-          .then(({ email }) => {
-            setUserEmail(email);
-            setLoggedIn(true);
-            navigate('/');
-          })
-          .catch((err) =>
-            console.error(`Ошибка получения контента пользователя: ${err}`)
-          );
-      }
-    };
-    tokenCheck();
+    setIsLoading(true);
+    handleLoginToken();
   }, [navigate]);
 
-  useEffect(() => {
-    setIsLoading(true);
+  const handleLoginToken = () => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      getContent(jwt)
+        .then(({ avatar, email }) => {
+          setUserEmail(email);
+          setLoggedIn(true);
+          getInitialContent();
+        })
+        .catch((err) => {
+          showAlert('Ошибка инициализации контента');
+          console.error(`Ошибка получения контента.\n${err}`);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  };
+
+  const getInitialContent = () => {
     api
       .getUserInfo()
       .then(({ _id, name, about, avatar }) => {
-        setCurrentUser({ _id, name, about, avatar });
+        setCurrentUser({
+          _id,
+          name,
+          about,
+          avatar
+        });
       })
-      .catch((err) =>
-        console.error(`Ошибка при загрузке данных пользователя: ${err}`)
-      )
-      .finally(() => {
-        setIsLoading(false);
+      .catch((err) => {
+        showAlert(`Ошибка загрузки данных пользователя`);
+        console.error(`Ошибка загрузки данных пользователя.\n${err}`);
       });
 
     api
@@ -73,26 +85,26 @@ const App = () => {
       .then((initialCards) => {
         setCards(initialCards);
       })
-      .catch((err) =>
-        console.error(
-          `Ошибка при загрузке данных пользователя и создании всех карточек: ${err}`
-        )
-      )
+      .catch((err) => {
+        showAlert(`Ошибка загрузки карточек`);
+        console.error(`Ошибка загрузки карточек.\n${err}`);
+      })
       .finally(() => {
         setIsLoading(false);
       });
-  }, [loggedIn]);
+  };
 
   const handleRegister = (email, password) => {
     register(email, password)
       .then(() => {
         setStatusInfoToolTip(true);
         setLoggedIn(true);
-        navigate('/signin');
+        navigate('/');
       })
       .catch((err) => {
         setStatusInfoToolTip(false);
-        console.error(`Ошибка регистрации пользователя: ${err}`);
+        showAlert('Ошибка регистрации пользователя');
+        console.error(`Ошибка регистрации пользователя.\n${err}`);
       })
       .finally(() => {
         setIsInfoToolTipOpen(true);
@@ -113,7 +125,8 @@ const App = () => {
       .catch((err) => {
         setStatusInfoToolTip(false);
         setIsInfoToolTipOpen(true);
-        console.error(`Ошибка авторизации пользователя: ${err}`);
+        showAlert('Ошибка авторизации пользователя');
+        console.error(`Ошибка авторизации пользователя.\n${err}`);
       });
   };
 
@@ -123,37 +136,37 @@ const App = () => {
     navigate('/signin');
   };
 
-  function handleEditAvatarClick() {
+  const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
-  }
+  };
 
-  function handleEditProfileClick() {
+  const handleEditProfileClick = () => {
     setIsEditProfileOpen(true);
-  }
+  };
 
-  function handleAddCardClick() {
+  const handleAddCardClick = () => {
     setIsAddPlacePopupOpen(true);
-  }
+  };
 
-  function handleSubmitDeleteClick(card) {
+  const handleSubmitDeleteClick = (card) => {
     setIsDeletePopupOpen(true);
     setDeleteCard(card);
-  }
+  };
 
-  function handleCardClick(card) {
+  const handleCardClick = (card) => {
     setImagePopupCard(card);
-  }
+  };
 
-  function closeAllPopups() {
+  const closeAllPopups = () => {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfileOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsDeletePopupOpen(false);
     setIsInfoToolTipOpen(false);
     setImagePopupCard(null);
-  }
+  };
 
-  function handleUpdateUser({ name, about }) {
+  const handleUpdateUser = ({ name, about }) => {
     setIsLoading(true);
     api
       .setUserInfo({ name, about })
@@ -162,19 +175,20 @@ const App = () => {
           name,
           about,
           avatar: currentUser.avatar,
-          _id: currentUser._id,
+          _id: currentUser._id
         });
         closeAllPopups();
       })
-      .catch((err) =>
-        console.error(`Ошибка при обновлении name, about пользователя: ${err}`)
-      )
+      .catch((err) => {
+        showAlert('Ошибка обновления name, about');
+        console.error(`Ошибка при обновлении name, about.\n${err}`);
+      })
       .finally(() => {
         setIsLoading(false);
       });
-  }
+  };
 
-  function handleUpdateAvatar({ avatar }) {
+  const handleUpdateAvatar = ({ avatar }) => {
     setIsLoading(true);
     api
       .setAvatar({ avatar })
@@ -183,37 +197,38 @@ const App = () => {
           name: currentUser.name,
           about: currentUser.about,
           avatar,
-          _id: currentUser._id,
+          _id: currentUser._id
         });
         closeAllPopups();
       })
       .catch((err) => {
-        console.error(`Ошибка при обновлении аватара пользователя: ${err}`);
+        showAlert('Ошибка обновления аватара');
+        console.error(`Ошибка при обновлении аватара.\n${err}`);
       })
       .finally(() => {
         setIsLoading(false);
       });
-  }
+  };
 
-  function handleCardLike(card) {
+  const handleCardLike = (card) => {
     setIsLoading(true);
     const isLiked = card.likes.some((i) => i === currentUser._id);
     api
       .changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
-        setCards((state) =>
-          state.map((c) => (c._id === card._id ? newCard : c))
-        );
+        setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
       })
-      .catch((err) =>
-        console.error(`Ошибка при добавлении/удалении лайка: ${err}`)
-      )
+      .catch((err) => {
+        showAlert('Ошибка добавления/удаления лайка');
+        console.error(`Ошибка при добавлении/удалении лайка.\n${err}`);
+      })
+
       .finally(() => {
         setIsLoading(false);
       });
-  }
+  };
 
-  function handleCardDelete(card) {
+  const handleCardDelete = (card) => {
     setIsLoading(true);
     api
       .deleteItem(card._id)
@@ -221,15 +236,17 @@ const App = () => {
         setCards(cards.filter((c) => c._id !== card._id));
         closeAllPopups();
       })
-      .catch((err) =>
-        console.error(`Ошибка при удалении карточки пользователя: ${err}`)
-      )
+      .catch((err) => {
+        showAlert('Ошибка удаления карточки');
+        console.error(`Ошибка при удалении карточки.\n${err}`);
+      })
+
       .finally(() => {
         setIsLoading(false);
       });
-  }
+  };
 
-  function handleAddPlaceSubmit({ name, link }) {
+  const handleAddPlaceSubmit = ({ name, link }) => {
     setIsLoading(true);
     api
       .addItem({ name, link })
@@ -238,53 +255,47 @@ const App = () => {
         setCards([newCard, ...cards]);
         closeAllPopups();
       })
-      .catch((err) =>
-        console.error(`Ошибка при создании новой карточки пользователя: ${err}`)
-      )
+      .catch((err) => {
+        showAlert('Ошибка создания карточки');
+        console.error(`Ошибка при создании новой карточки.\n${err}`);
+      })
+
       .finally(() => {
         setIsLoading(false);
       });
-  }
+  };
+
+  const showAlert = (message) => {
+    setMessageAlert(message);
+    setIsActiveAlert(true);
+    setTimeout(() => {
+      setIsActiveAlert(false);
+    }, 3000);
+  };
 
   return (
     <div className="page">
       <div className="page__container">
-        <CurrentUserContext.Provider value={currentUser}>
+        <UserContext.Provider value={{ currentUser }}>
           <Routes>
-            <Route
-              path="/signin"
-              element={<Login handleLogin={handleLogin} />}
-            />
-
-            <Route
-              path="/signup"
-              element={<Register handleRegister={handleRegister} />}
-            />
-
+            <Route path="/signin" element={<Login handleLogin={handleLogin} />} />
+            <Route path="/signup" element={<Register handleRegister={handleRegister} />} />
             <Route
               path="/"
               element={
-                isLoading ? (
-                  <Spinner />
-                ) : (
-                  <ProtectedRoute path="/" loggedIn={loggedIn}>
-                    <Header
-                      loggedIn={loggedIn}
-                      email={userEmail}
-                      handleLogout={handleLogout}
-                    />
-                    <Main
-                      onEditProfile={handleEditProfileClick}
-                      onEditAvatar={handleEditAvatarClick}
-                      onAddPlace={handleAddCardClick}
-                      onCardDelete={handleSubmitDeleteClick}
-                      onCardClick={handleCardClick}
-                      onCardLike={handleCardLike}
-                      cards={cards}
-                    />
-                    <Footer />
-                  </ProtectedRoute>
-                )
+                <ProtectedRoute path="/" loggedIn={loggedIn} isLoading={isLoading}>
+                  <Header loggedIn={loggedIn} email={userEmail} handleLogout={handleLogout} />
+                  <Main
+                    onEditProfile={handleEditProfileClick}
+                    onEditAvatar={handleEditAvatarClick}
+                    onAddPlace={handleAddCardClick}
+                    onCardDelete={handleSubmitDeleteClick}
+                    onCardClick={handleCardClick}
+                    onCardLike={handleCardLike}
+                    cards={cards}
+                  />
+                  <Footer />
+                </ProtectedRoute>
               }
             />
           </Routes>
@@ -321,10 +332,11 @@ const App = () => {
             currentStatus={statusInfoToolTip}
           />
           <ImagePopup card={imagePopupCard} onClose={closeAllPopups} />
-        </CurrentUserContext.Provider>
+          <Alert messageAlert={messageAlert} isActiveAlert={isActiveAlert} />
+        </UserContext.Provider>
       </div>
     </div>
   );
-};
+}
 
 export default App;

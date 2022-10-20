@@ -1,12 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 import PopupWithForm from './PopupWithForm';
 
-export default function AddPlacePopup({
-  isOpen,
-  onClose,
-  onAddPlace,
-  isSending,
-}) {
+export default function AddPlacePopup({ isOpen, onClose, onAddPlace, isSending }) {
   const inputRef = useRef();
   const [placeData, setPlaceData] = useState({});
   const [isValid, setIsValid] = useState(false);
@@ -21,28 +16,28 @@ export default function AddPlacePopup({
     const { name, value } = input;
     setPlaceData((oldData) => ({
       ...oldData,
-      [name]: value,
+      [name]: value
     }));
     setIsValid(input.closest('form').checkValidity());
     setValidationMessage({
       ...validationMessage,
-      [name]: input.validationMessage,
+      [name]: input.validationMessage
     });
   };
 
-  function handleSubmit(evt) {
+  const handleSubmit = (evt) => {
     evt.preventDefault();
     onAddPlace({
       name: placeData.name,
-      link: placeData.link,
+      link: placeData.link
     });
     setPlaceData({
       name: '',
-      link: '',
+      link: ''
     });
     setIsValid(false);
     setValidationMessage({});
-  }
+  };
 
   return (
     <PopupWithForm
@@ -52,12 +47,9 @@ export default function AddPlacePopup({
       onClose={onClose}
       onSubmit={handleSubmit}
       buttonText={isSending ? 'Создание...' : 'Сохранить'}
-      buttonActive={isValid}
-    >
+      buttonActive={isValid}>
       <input
-        className={`form__input ${
-          validationMessage.name && 'form__input_type_error'
-        }`}
+        className={`form__input ${validationMessage.name && 'form__input_type_error'}`}
         placeholder="Название"
         type="text"
         name="name"
@@ -71,17 +63,12 @@ export default function AddPlacePopup({
       />
       <span
         id="name-error"
-        className={`form__input-error ${
-          !isValid && 'form__input-error_visible'
-        }`}
-      >
+        className={`form__input-error ${!isValid && 'form__input-error_visible'}`}>
         {validationMessage.name}
       </span>
 
       <input
-        className={`form__input ${
-          validationMessage.link && 'form__input_type_error'
-        }`}
+        className={`form__input ${validationMessage.link && 'form__input_type_error'}`}
         placeholder="Ссылка на картинку"
         type="url"
         name="link"
@@ -92,10 +79,7 @@ export default function AddPlacePopup({
       />
       <span
         id="link-error"
-        className={`form__input-error ${
-          !isValid && 'form__input-error_visible'
-        }`}
-      >
+        className={`form__input-error ${!isValid && 'form__input-error_visible'}`}>
         {validationMessage.link}
       </span>
     </PopupWithForm>

@@ -23,17 +23,10 @@ function InfoToolTip({ isOpen, onClose, currentStatus }) {
   };
 
   return (
-    <div
-      className={`popup ${isOpen && 'popup_opened'}`}
-      onMouseDown={handleOverlayClose}
-    >
-      <div className="popup__overlay" onClick={handleOverlayClose}></div>
+    <div className={`popup ${isOpen && 'popup_opened'}`} onMouseDown={handleOverlayClose}>
+      <div className="popup__overlay" onClick={handleOverlayClose} />
       <div className="popup__container">
-        <button
-          className="button button_popup_close"
-          type="button"
-          onClick={onClose}
-        ></button>
+        <button className="button button_popup_close" type="button" onClick={onClose} />
         <img
           src={currentStatus ? successIcon : failIcon}
           alt="Результат попытки регистрации"

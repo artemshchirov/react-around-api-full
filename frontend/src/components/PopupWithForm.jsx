@@ -7,7 +7,7 @@ export default function PopupWithForm({
   onSubmit,
   buttonText = 'Сохранить',
   buttonActive,
-  children,
+  children
 }) {
   useEffect(() => {
     if (!isOpen) return;
@@ -29,28 +29,18 @@ export default function PopupWithForm({
   };
 
   return (
-    <div
-      className={`popup ${isOpen && 'popup_opened'}`}
-      onMouseDown={handleOverlayClose}
-    >
-      <div className="popup__overlay" onClick={handleOverlayClose}></div>
+    <div className={`popup ${isOpen && 'popup_opened'}`} onMouseDown={handleOverlayClose}>
+      <div className="popup__overlay" onClick={handleOverlayClose} />
       <div className="popup__container">
-        <button
-          className="button button_popup_close"
-          type="button"
-          onClick={onClose}
-        ></button>
+        <button className="button button_popup_close" type="button" onClick={onClose} />
         <form className="form" onSubmit={onSubmit} noValidate>
           <fieldset className="form__container">
             <legend className="form__title">{title}</legend>
             {children}
             <button
-              className={`button button_form_submit ${
-                !buttonActive && 'button_disabled'
-              }`}
+              className={`button button_form_submit ${!buttonActive && 'button_disabled'}`}
               type="submit"
-              disabled={!buttonActive}
-            >
+              disabled={!buttonActive}>
               {buttonText}
             </button>
           </fieldset>
