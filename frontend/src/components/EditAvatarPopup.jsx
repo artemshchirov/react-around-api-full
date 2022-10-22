@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from 'react';
 
 import PopupWithForm from './PopupWithForm';
 
-export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isSending }) {
+function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isSending }) {
   const { t } = useTranslation();
   const inputRef = useRef();
   const [isValid, setIsValid] = useState(false);
@@ -40,7 +40,7 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isSen
       title={t('popup_edit_avatar_title')}
       onClose={onClose}
       onSubmit={handleSubmit}
-      buttonText={isSending ? t('btn_saving') + '...' : t('btn_save')}
+      buttonText={isSending ? `${t('btn_saving')}...` : t('btn_save')}
       buttonActive={isValid}>
       <input
         className={`form__input ${validationMessage.avatar && 'form__input_type_error'}`}
@@ -60,3 +60,5 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isSen
     </PopupWithForm>
   );
 }
+
+export default EditAvatarPopup;

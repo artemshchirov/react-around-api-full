@@ -17,7 +17,7 @@ function SubmitPopup({ isOpen, onClose, onSubmitDelete, card, isSending }) {
       title={t('popup_card_delete')}
       onClose={onClose}
       onSubmit={handleSubmit}
-      buttonText={isSending ? t('popup_card_deleting') + '...' : t('popup_card_delete_approve')}
+      buttonText={isSending ? `${t('popup_card_deleting')}...` : t('popup_card_delete_approve')}
       buttonActive
     />
   );

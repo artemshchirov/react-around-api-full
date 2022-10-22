@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import SelectLang from '../components/SelectLang/SelectLang';
+import SelectLang from './SelectLang/SelectLang';
 
 import logo from '../images/logo-around.svg';
 
