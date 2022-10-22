@@ -4,7 +4,7 @@ import UserContext from '../contexts/UserContext';
 
 import PopupWithForm from './PopupWithForm';
 
-export default function EditProfilePopup({ isOpen, onClose, onUpdateUser, isSending }) {
+function EditProfilePopup({ isOpen, onClose, onUpdateUser, isSending }) {
   const { t } = useTranslation();
   const inputRef = useRef();
   const { currentUser } = useContext(UserContext);
@@ -52,7 +52,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser, isSend
       title={t('popup_edit_profile_title')}
       onClose={onClose}
       onSubmit={handleSubmit}
-      buttonText={isSending ? t('btn_save') + '...' : t('btn_save')}
+      buttonText={isSending ? `${t('btn_save')}...` : t('btn_save')}
       buttonActive={isValid}>
       <input
         className={`form__input ${validationMessage.name && 'form__input_type_error'}`}
@@ -93,3 +93,5 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser, isSend
     </PopupWithForm>
   );
 }
+
+export default EditProfilePopup;

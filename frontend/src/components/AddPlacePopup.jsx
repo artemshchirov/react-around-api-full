@@ -49,7 +49,7 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlace, isSending }
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
-      buttonText={isSending ? t('btn_creating') + '...' : t('btn_create')}
+      buttonText={isSending ? `${t('btn_creating')}...` : t('btn_create')}
       buttonActive={isValid}>
       <input
         className={`form__input ${validationMessage.name && 'form__input_type_error'}`}

@@ -1,21 +1,21 @@
 import { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import UserContext from '../contexts/UserContext';
 import { register, authorize, getContent } from '../utils/auth';
+import UserContext from '../contexts/UserContext';
+
+import Login from './Login';
+import Register from './Register';
+import Header from './Header';
+import Main from './Main';
+import Footer from './Footer';
 import AddPlacePopup from './AddPlacePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import EditProfilePopup from './EditProfilePopup';
-import Footer from './Footer';
-import Header from './Header';
-import ImagePopup from './ImagePopup';
-import InfoToolTip from './InfoToolTip';
-import Login from './Login';
-import Main from './Main';
 import ProtectedRoute from './ProtectedRoute';
-import Register from './Register';
-import Spinner from './Spinner';
-import Alert from './Alert/Alert';
+import ImagePopup from './ImagePopup';
 import SubmitPopup from './SubmitPopup';
+import InfoToolTip from './InfoToolTip';
+import Alert from './Alert/Alert';
 import api from '../utils/api';
 
 function App() {
