@@ -1,8 +1,11 @@
+import { useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
+
 import successIcon from '../images/info-success.svg';
 import failIcon from '../images/info-fail.svg';
 
 function InfoToolTip({ isOpen, onClose, currentStatus }) {
+  const { t } = useTranslation();
   useEffect(() => {
     if (!isOpen) return;
 
@@ -29,13 +32,11 @@ function InfoToolTip({ isOpen, onClose, currentStatus }) {
         <button className="button button_popup_close" type="button" onClick={onClose} />
         <img
           src={currentStatus ? successIcon : failIcon}
-          alt="Результат попытки регистрации"
+          alt="Register result"
           className="popup__icon"
         />
         <p className="popup__status">
-          {currentStatus
-            ? 'Вы успешно зарегистрировались!'
-            : 'Что-то пошло не так! Попробуйте ещё раз.'}
+          {currentStatus ? t('popup__status_success') : t('popup__status_fail')}
         </p>
       </div>
     </div>

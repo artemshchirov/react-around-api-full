@@ -55,7 +55,7 @@ function App() {
         })
         .catch((err) => {
           handleLogout();
-          showAlert('Ошибка инициализации контента');
+          showAlert('Ошибка инициализации контента 1');
           console.error(`Ошибка получения контента.\n${err}`);
         })
         .finally(() => {
@@ -130,7 +130,7 @@ function App() {
             })
             .catch((err) => {
               handleLogout();
-              showAlert('Ошибка инициализации контента');
+              showAlert('Ошибка инициализации контента 2');
               console.error(`Ошибка инициализации контента.\n${err}`);
             });
         }

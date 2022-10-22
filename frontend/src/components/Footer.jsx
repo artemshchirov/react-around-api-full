@@ -1,4 +1,7 @@
-export default function Footer() {
+import { useTranslation } from 'react-i18next';
+
+function Footer() {
+  const { t } = useTranslation();
   return (
     <footer className="footer section page__footer">
       <p className="footer__copyright">
@@ -7,9 +10,11 @@ export default function Footer() {
           href="https://github.com/artemshchirov"
           target="_blank"
           rel="noreferrer">
-          &copy; 2022 Ɐrtem Shchirov
+          {t('footer__copyright')}
         </a>
       </p>
     </footer>
   );
 }
+
+export default Footer;

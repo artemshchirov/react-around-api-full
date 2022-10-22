@@ -1,8 +1,11 @@
+import { useTranslation } from 'react-i18next';
 import { useRef, useEffect, useState, useContext } from 'react';
 import UserContext from '../contexts/UserContext';
+
 import PopupWithForm from './PopupWithForm';
 
 export default function EditProfilePopup({ isOpen, onClose, onUpdateUser, isSending }) {
+  const { t } = useTranslation();
   const inputRef = useRef();
   const { currentUser } = useContext(UserContext);
   const [profileData, setProfileData] = useState({});
@@ -46,17 +49,17 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser, isSend
     <PopupWithForm
       isOpen={isOpen}
       name="profile-edit"
-      title="Редактировать профиль"
+      title={t('popup_edit_profile_title')}
       onClose={onClose}
       onSubmit={handleSubmit}
-      buttonText={isSending ? 'Сохранение...' : 'Сохранить'}
+      buttonText={isSending ? t('btn_save') + '...' : t('btn_save')}
       buttonActive={isValid}>
       <input
         className={`form__input ${validationMessage.name && 'form__input_type_error'}`}
         name="name"
         id="name-profile"
         type="text"
-        placeholder="Имя"
+        placeholder={t('popup_edit_profile_input')}
         minLength="2"
         maxLength="40"
         value={profileData.name || ''}
@@ -75,7 +78,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser, isSend
         name="about"
         id="about"
         type="text"
-        placeholder="Профессия"
+        placeholder={t('popup_edit_profile_input_2')}
         minLength="2"
         maxLength="200"
         value={profileData.about || ''}

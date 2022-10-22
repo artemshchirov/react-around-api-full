@@ -1,30 +1,41 @@
-# React Around Frontend
+# MESTO x REACT
 
-## Project Link
+Website domain: `https://around.nomoredomains.sbs`
 
-<https://github.com/artemshchirov/react-around-front>
+Public IP of the server: `51.250.96.109`
 
-## Project Description
+## Description
 
-_This project uses React to recreate a [previous](https://github.com/artemshchirov/around) JavaScript project._
+Simple interactive gallery where users can share pictures. This is a student project created during a web development study track. During the first sprints of the course the project was written in pure JavaScript ([Link to the repository](https://github.com/artemshchirov/around)), the current project was aiming to implement the same functionality using React library and JSX syntax.
 
-It is a web page showing a user's information and photos they have uploaded from around the US. Images can be deleted, liked, and new images added.
+## Functionality
 
-Technologies and Techniques Used
-This web page was created with HTML, CSS, and JavaScript, JSX, and the React framework. It has been made adaptive to different screen sizes.
+- Adding new cards to the grid
+- Deleting cards created by the user
+- Editing user profile information
+- Form validation on the client side
+- Communication with external API to fetch and patch/delete data
 
-### Some of the skills used are
+## Technologies used
 
-- Basic JSX
-- JSX lists and events
-- Imperative and declarative approaches to programming
-- Functional and Class Components
-- Creating a new project in React
-- Project structures
-- Debugging and React DevTools
-- Hooks and effect dependencies
-- Lifting state
-- Global state
-- Creating and subscribing to a context
-- Working with forms
-- Refs
+- Adaptive layout using flexbox and grid positioning
+- Nested file structure according to BEM methodology
+- Asynchronous JavaScript
+- React JS
+- Functional components
+- Object oriented programming
+- Webpack
+
+## Install the project
+
+```bash
+git clone git@github.com:artemshchirov/react-around-api-full.git
+
+cd frontend/
+
+npm install
+
+npm run build
+
+npm start
+```

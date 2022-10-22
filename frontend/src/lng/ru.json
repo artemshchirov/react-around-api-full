@@ -1,0 +1,39 @@
+{
+  "header__link_1": "Войти",
+  "header__link_2": "Выйти",
+
+  "btn_create": "Создать",
+  "btn_creating": "Создание",
+
+  "btn_save": "Сохранить",
+  "btn_saving": "Сохранение",
+
+  "popup_input_link": "Ссылка на картинку",
+
+  "popup_add_place_title": "Новое место",
+  "popup_add_place_input_1": "Название",
+
+  "popup_edit_avatar_title": "Обновить аватар",
+  "popup_edit_profile_title": "Редактировать профиль",
+
+  "popup_edit_profile_input_1": "Имя",
+  "popup_edit_profile_input_2": "Профессия",
+
+  "footer__copyright": "\u00A9 2022 Ɐртём Щиров",
+
+  "popup__status_success": "Вы успешно зарегистрировались!",
+  "popup__status_fail": "Что-то пошло не так! Попробуйте ещё раз.",
+
+  "sign__title_reg": "Регистрация",
+  "button_form_submit_reg": "Зарегистрироваться",
+  "sign__register": "Уже зарегистрированы? Войти",
+
+  "sign__title_log": "Вход",
+  "sign__input_password": "Пароль",
+  "button_form_submit_log": "Войти",
+  "sign__login": "Ещё не зарегистрированы? Регистрация",
+
+  "popup_card_delete": "Вы уверены?",
+  "popup_card_deleting": "Удаление",
+  "popup_card_delete_approve": "Да"
+}

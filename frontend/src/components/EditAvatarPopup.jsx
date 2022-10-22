@@ -1,7 +1,10 @@
+import { useTranslation } from 'react-i18next';
 import { useRef, useState, useEffect } from 'react';
+
 import PopupWithForm from './PopupWithForm';
 
 export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isSending }) {
+  const { t } = useTranslation();
   const inputRef = useRef();
   const [isValid, setIsValid] = useState(false);
   const [validationMessage, setValidationMessage] = useState({});
@@ -34,16 +37,16 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isSen
     <PopupWithForm
       isOpen={isOpen}
       name="edit-avatar"
-      title="Обновить аватар"
+      title={t('popup_edit_avatar_title')}
       onClose={onClose}
       onSubmit={handleSubmit}
-      buttonText={isSending ? 'Сохранение...' : 'Сохранить'}
+      buttonText={isSending ? t('btn_saving') + '...' : t('btn_save')}
       buttonActive={isValid}>
       <input
         className={`form__input ${validationMessage.avatar && 'form__input_type_error'}`}
         name="avatar"
         id="avatar"
-        placeholder="Ссылка на изображение"
+        placeholder={t('popup_input_link')}
         type="url"
         ref={inputRef}
         onChange={handleChange}

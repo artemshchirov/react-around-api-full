@@ -1,8 +1,13 @@
+import { useTranslation } from 'react-i18next';
 import { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../images/logo-mesto.svg';
+
+import SelectLang from '../components/SelectLang/SelectLang';
+
+import logo from '../images/logo-around.svg';
 
 function Register({ handleRegister }) {
+  const { t } = useTranslation();
   const [registerData, setRegisterData] = useState({});
 
   const [isValid, setIsValid] = useState(true);
@@ -48,15 +53,16 @@ function Register({ handleRegister }) {
   return (
     <>
       <header className="header page__header">
-        <img src={logo} alt="Логотип 'Место'" className="logo" />
+        <img src={logo} alt="logo 'Around'" className="logo" />
+        <SelectLang />
         <Link to="/signin" className="header__link">
-          Вход
+          {t('sign__title_log')}
         </Link>
       </header>
       <section className="sign">
         <form name="register" onSubmit={handleSubmit} noValidate>
           <fieldset className="sign__form">
-            <legend className="sign__title">Регистрация</legend>
+            <legend className="sign__title">{t('sign__title_reg')}</legend>
             <input
               className={`sign__input ${validationMessage.email && 'sign__input_type_error'}`}
               name="email"
@@ -80,7 +86,7 @@ function Register({ handleRegister }) {
               name="password"
               id="password-signup"
               type="password-signup"
-              placeholder="Пароль"
+              placeholder={t('sign__input_password')}
               minLength="2"
               maxLength="15"
               value={registerData.password || ''}
@@ -95,12 +101,12 @@ function Register({ handleRegister }) {
             <button
               className={`button button_form_submit-sign ${!isValid && 'button_disabled'}`}
               type="submit">
-              Зарегистрироваться
+              {t('button_form_submit_reg')}
             </button>
           </fieldset>
         </form>
         <Link to="/signin" className="sign__login">
-          Уже зарегестрированы? Войти
+          {t('sign__register')}
         </Link>
       </section>
     </>

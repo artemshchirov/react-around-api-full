@@ -1,7 +1,10 @@
+import { useTranslation } from 'react-i18next';
 import { useRef, useEffect, useState } from 'react';
+
 import PopupWithForm from './PopupWithForm';
 
 export default function AddPlacePopup({ isOpen, onClose, onAddPlace, isSending }) {
+  const { t } = useTranslation();
   const inputRef = useRef();
   const [placeData, setPlaceData] = useState({});
   const [isValid, setIsValid] = useState(false);
@@ -41,16 +44,16 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlace, isSending }
 
   return (
     <PopupWithForm
-      title="Новое место"
+      title={t('popup_add_place_title')}
       name="add-card"
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
-      buttonText={isSending ? 'Создание...' : 'Сохранить'}
+      buttonText={isSending ? t('btn_creating') + '...' : t('btn_create')}
       buttonActive={isValid}>
       <input
         className={`form__input ${validationMessage.name && 'form__input_type_error'}`}
-        placeholder="Название"
+        placeholder={t('popup_add_place_input_1')}
         type="text"
         name="name"
         id="name-card"
@@ -69,7 +72,7 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlace, isSending }
 
       <input
         className={`form__input ${validationMessage.link && 'form__input_type_error'}`}
-        placeholder="Ссылка на картинку"
+        placeholder={t('popup_input_link')}
         type="url"
         name="link"
         id="link"

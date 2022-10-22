@@ -1,0 +1,39 @@
+{
+  "header__link_1": "Sign in",
+  "header__link_2": "Sign out",
+
+  "btn_create": "Create",
+  "btn_creating": "Creating",
+
+  "btn_save": "Save",
+  "btn_saving": "Saving",
+
+  "popup_input_link": "Image link",
+
+  "popup_add_place_title": "New place",
+  "popup_add_place_input_1": "Title",
+
+  "popup_edit_profile_input_1": "Name",
+  "popup_edit_profile_input_2": "About",
+
+  "popup_edit_avatar_title": "Change profile picture",
+  "popup_edit_profile_title": "Edit profile",
+
+  "footer__copyright": "\u00A9 2022 Ɐrtem Shchirov",
+
+  "popup__status_success": "Success! You have now been registered.",
+  "popup__status_fail": "Oops, something went wrong! Please try again.",
+
+  "sign__title_reg": "Sign up",
+  "button_form_submit_reg": "Sign up",
+
+  "sign__title_log": "Log in",
+  "sign__input_password": "Password",
+  "button_form_submit_log": "Log in",
+  "sign__login": "Not a member yet? Sign up here!",
+  "sign__register": "Already a member? Log in here!",
+
+  "popup_card_delete": "Are you sure?",
+  "popup_card_deleting": "Deleting",
+  "popup_card_delete_approve": "Yes"
+}

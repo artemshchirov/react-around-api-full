@@ -1,12 +1,14 @@
 .header__link {
-  background-color: #000;
   margin: 0;
-  padding-top: 6px;
-  border: none;
+  padding: 0 0 0 6px;
+  min-width: max-content;
+  align-self: center;
   font-size: 15px;
   line-height: 1.22;
   text-decoration: none;
   color: #fff;
+  background-color: #000;
+  border: none;
   cursor: pointer;
   transition: opacity 0.1s;
 }
@@ -17,6 +19,12 @@
 
 @media screen and (min-width: 698px) {
   .header__link {
-    font-size: 18px;
+    font-size: 19px;
+  }
+}
+
+@media screen and (min-width: 1279px) {
+  .header__link {
+    padding-left: 30px;
   }
 }

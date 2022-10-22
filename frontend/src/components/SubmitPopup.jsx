@@ -1,6 +1,10 @@
+import { useTranslation } from 'react-i18next';
+
 import PopupWithForm from './PopupWithForm';
 
 function SubmitPopup({ isOpen, onClose, onSubmitDelete, card, isSending }) {
+  const { t } = useTranslation();
+
   function handleSubmit(evt) {
     evt.preventDefault();
     onSubmitDelete(card);
@@ -10,10 +14,10 @@ function SubmitPopup({ isOpen, onClose, onSubmitDelete, card, isSending }) {
     <PopupWithForm
       isOpen={isOpen}
       name="card-delete"
-      title="Вы уверены?"
+      title={t('popup_card_delete')}
       onClose={onClose}
       onSubmit={handleSubmit}
-      buttonText={isSending ? 'Удаление...' : 'Да'}
+      buttonText={isSending ? t('popup_card_deleting') + '...' : t('popup_card_delete_approve')}
       buttonActive
     />
   );
