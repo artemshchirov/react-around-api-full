@@ -1,20 +1,20 @@
-const mongoose = require('mongoose');
-const validator = require('validator');
-const bcrypt = require('bcrypt');
-const UnauthorizedError = require('../errors/UnauthorizedError');
+const mongoose = require("mongoose");
+const validator = require("validator");
+const bcrypt = require("bcrypt");
+const UnauthorizedError = require("../errors/UnauthorizedError");
 
 const userSchema = mongoose.Schema({
   name: {
     type: String,
     minlength: 2,
     maxlength: 30,
-    default: 'Жак-Ив Кусто',
+    default: "Username",
   },
   about: {
     type: String,
     minlength: 2,
     maxlength: 30,
-    default: 'Исследователь',
+    default: "About",
   },
   avatar: {
     type: String,
@@ -22,10 +22,10 @@ const userSchema = mongoose.Schema({
       validator(text) {
         return validator.isURL(text);
       },
-      message: 'Invalid Avatar URL',
+      message: "Invalid Avatar URL",
     },
     default:
-      'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
+      "https://i.pinimg.com/564x/e0/3a/f4/e03af47cdc6ed351b2258034dbf39347.jpg",
   },
   email: {
     type: String,
@@ -36,7 +36,7 @@ const userSchema = mongoose.Schema({
       validator(text) {
         return validator.isEmail(text);
       },
-      message: 'Invalid Email Format',
+      message: "Invalid Email Format",
     },
   },
   password: {
@@ -52,20 +52,22 @@ userSchema.statics.findUserByCredentials = function findUserByCredentials(
   next
 ) {
   return this.findOne({ email })
-    .select('+password')
+    .select("+password")
     .orFail(() => {
-      throw new UnauthorizedError('401 Invalid Email or Password 1');
+      throw new UnauthorizedError("401 Invalid Email or Password 1");
     })
-    .then((user) => bcrypt
-      .compare(password, user.password)
-      .then((matched) => {
-        if (!matched) {
-          throw new UnauthorizedError('401 Invalid Email or Password 2');
-        }
+    .then((user) =>
+      bcrypt
+        .compare(password, user.password)
+        .then((matched) => {
+          if (!matched) {
+            throw new UnauthorizedError("401 Invalid Email or Password 2");
+          }
 
-        return user;
-      })
-      .catch(next));
+          return user;
+        })
+        .catch(next)
+    );
 };
 
-exports.User = mongoose.model('user', userSchema);
+exports.User = mongoose.model("user", userSchema);

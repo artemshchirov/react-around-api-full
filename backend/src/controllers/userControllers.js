@@ -1,10 +1,10 @@
-const bcrypt = require('bcrypt');
-const { User } = require('../models/userModels');
-const { jwtSign } = require('../utils/jwtSign');
-const { OK, CREATED, SALT_ROUND } = require('../utils/constants');
-const ConflictError = require('../errors/ConflictError');
-const NotFoundError = require('../errors/NotFoundError');
-const BadRequestError = require('../errors/BadRequestError');
+const bcrypt = require("bcrypt");
+const { User } = require("../models/userModels");
+const { jwtSign } = require("../utils/jwtSign");
+const { OK, CREATED, SALT_ROUND } = require("../utils/constants");
+const ConflictError = require("../errors/ConflictError");
+const NotFoundError = require("../errors/NotFoundError");
+const BadRequestError = require("../errors/BadRequestError");
 
 exports.createUser = async (req, res, next) => {
   const { name, about, avatar, email, password } = req.body;
@@ -27,10 +27,10 @@ exports.createUser = async (req, res, next) => {
     });
   } catch (err) {
     if (err.code === 11000) {
-      return next(new ConflictError('409: Conflict: Not Unique Email'));
+      return next(new ConflictError("409: Conflict: Not Unique Email"));
     }
-    if (err.name === 'ValidationError') {
-      return next(new BadRequestError('400: Invalid Card Data'));
+    if (err.name === "ValidationError") {
+      return next(new BadRequestError("400: Invalid Card Data"));
     }
     next(err);
   }
@@ -40,8 +40,8 @@ exports.login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwtSign(user._id);
-      res.status(OK).send({ token });
+      const jwt = jwtSign(user._id);
+      res.status(OK).send({ jwt });
     })
     .catch(next);
 };
@@ -51,7 +51,7 @@ exports.getCurrentUser = (req, res, next) => {
 
   User.findById(id)
     .orFail(() => {
-      throw new NotFoundError('404: User Not Found');
+      throw new NotFoundError("404: User Not Found");
     })
     .then((user) => {
       res.status(OK).send(user);
@@ -72,7 +72,7 @@ exports.getUserById = async (req, res, next) => {
   const { userId } = req.params;
   try {
     const user = await User.findById(userId).orFail(() => {
-      throw new NotFoundError('404: User Not Found');
+      throw new NotFoundError("404: User Not Found");
     });
     res.status(OK).send({ user });
   } catch (err) {
@@ -97,8 +97,8 @@ exports.updateProfile = async (req, res, next) => {
     );
     res.status(OK).send({ profile });
   } catch (err) {
-    if (err.name === 'ValidationError') {
-      return next(new BadRequestError('400: Invalid Card Data'));
+    if (err.name === "ValidationError") {
+      return next(new BadRequestError("400: Invalid Card Data"));
     }
     next(err);
   }
@@ -120,8 +120,8 @@ exports.updateAvatar = async (req, res, next) => {
     );
     res.status(OK).send({ profile });
   } catch (err) {
-    if (err.name === 'ValidationError') {
-      return next(new BadRequestError('400: Invalid Card Data'));
+    if (err.name === "ValidationError") {
+      return next(new BadRequestError("400: Invalid Card Data"));
     }
     next(err);
   }
