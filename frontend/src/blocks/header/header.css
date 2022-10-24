@@ -1,9 +1,10 @@
 .header {
-  max-width: 320px;
+  margin: 0 auto;
   padding-bottom: 31.6px;
+  /* max-width: calc(358px - 50px * 2); */
+  max-width: 320px;
   display: flex;
   justify-content: space-between;
-  max-width: calc(358px - 50px * 2);
 }
 
 @media screen and (min-width: 698px) {

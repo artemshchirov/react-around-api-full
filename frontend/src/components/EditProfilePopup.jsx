@@ -59,7 +59,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isSending }) {
         name="name"
         id="name-profile"
         type="text"
-        placeholder={t('popup_edit_profile_input')}
+        placeholder={t('popup_edit_profile_input_1')}
         minLength="2"
         maxLength="40"
         value={profileData.name || ''}

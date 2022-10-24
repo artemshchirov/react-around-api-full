@@ -8,12 +8,12 @@
   "btn_save": "Save",
   "btn_saving": "Saving",
 
-  "popup_input_link": "Image link",
+  "popup_input_link": "Link to image",
 
   "popup_add_place_title": "New place",
   "popup_add_place_input_1": "Title",
 
-  "popup_edit_profile_input_1": "Name",
+  "popup_edit_profile_input_1": "Username",
   "popup_edit_profile_input_2": "About",
 
   "popup_edit_avatar_title": "Change profile picture",

@@ -67,8 +67,8 @@ function Login({ handleLogin }) {
               className={`sign__input ${validationMessage.email && 'sign__input_type_error'}`}
               name="email"
               id="email-signin"
-              type="email-signin"
-              placeholder="Email"
+              type="email"
+              placeholder="E-mail"
               minLength="2"
               maxLength="320"
               value={loginData.email || ''}
@@ -85,7 +85,7 @@ function Login({ handleLogin }) {
               className={`sign__input ${validationMessage.password && 'sign__input_type_error'}`}
               name="password"
               id="password-signin"
-              type="password-signin"
+              type="password"
               placeholder={t('sign__input_password')}
               minLength="2"
               maxLength="15"
@@ -105,7 +105,7 @@ function Login({ handleLogin }) {
             </button>
           </fieldset>
         </form>
-        <Link to="/signin" className="sign__login">
+        <Link to="/signup" className="sign__login">
           {t('sign__login')}
         </Link>
       </section>

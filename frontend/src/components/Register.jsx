@@ -67,7 +67,7 @@ function Register({ handleRegister }) {
               className={`sign__input ${validationMessage.email && 'sign__input_type_error'}`}
               name="email"
               id="email-signup"
-              type="email-signup"
+              type="email"
               placeholder="Email"
               minLength="2"
               maxLength="320"
@@ -85,7 +85,7 @@ function Register({ handleRegister }) {
               className={`sign__input ${validationMessage.password && 'sign__input_type_error'}`}
               name="password"
               id="password-signup"
-              type="password-signup"
+              type="password"
               placeholder={t('sign__input_password')}
               minLength="2"
               maxLength="15"
